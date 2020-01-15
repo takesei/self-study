@@ -17,7 +17,14 @@ def test_hello(api):
 def test_hello_json(api):
     arg = 'morake'
     r = api.requests.get(f'/hello/{arg}/json')
+    assert 'content-type' in r.headers
     assert r.headers['content-type'] == 'application/json'
     r_json = r.json()
     assert 'message' in r_json
     assert r_json['message'] == f'hello, {arg}'
+
+def test_hello_html(api):
+    arg = 'morake'
+    r = api.requests.get(f'/hello/{arg}/html')
+    assert 'content-type' in r.headers
+    assert r.headers['content-type'] == 'text/html'
