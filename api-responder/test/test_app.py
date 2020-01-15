@@ -32,3 +32,8 @@ def test_hello_html(api):
 def test_teapot(api):
     r = api.requests.get('/416')
     assert r.status_code == 416
+
+def test_pizza_pizza(api):
+    r = api.requests.get('/pizza')
+    assert 'X-pizza' in r.headers
+    assert r.headers['X-Pizza'] == '42'

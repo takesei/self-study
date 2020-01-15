@@ -21,3 +21,31 @@ def hello_html(req, resp, *, who):
 @api.route('/416')
 def teapot(req, resp):
     resp.status_code = api.status_codes.HTTP_416
+
+@api.route('/pizza')
+def pizza_pizza(req, resp):
+    resp.headers['X-Pizza'] = '42'
+
+@api.route('/incoming')
+async def receive_incoming(req, resp):
+    @api.background.task
+    def process_data(data):
+        'demo part'
+        time.sleep(10)
+    data = await req.media()
+    process_data(data)
+    resp.media = {'success': True}
+
+@api.route('/file-upload')
+async def upload_file(req, resp):
+    @api.background.task
+    def process_data(data):
+        f = open('./{}'.format(data['file']['filename']), 'w')
+        f.write(data['file']['content'].decode('utf-8'))
+        f.close()
+
+    data = await req.media(format='files')
+    process_data(data)
+
+    resp.media = {'success': 'ok'}
+
