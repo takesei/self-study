@@ -13,3 +13,11 @@ def test_hello(api):
     arg = 'honya'
     r = api.requests.get(f'/hello/{arg}')
     assert r.text == f'hello, {arg}!'
+
+def test_hello_json(api):
+    arg = 'morake'
+    r = api.requests.get(f'/hello/{arg}/json')
+    assert r.headers['content-type'] == 'application/json'
+    r_json = r.json()
+    assert 'message' in r_json
+    assert r_json['message'] == f'hello, {arg}'
