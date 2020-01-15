@@ -17,3 +17,7 @@ def hello_json(req, resp, *, who):
 @api.route('/hello/{who}/html')
 def hello_html(req, resp, *, who):
     resp.html = api.template('hello.html', who=who)
+
+@api.route('/416')
+def teapot(req, resp):
+    resp.status_code = api.status_codes.HTTP_416

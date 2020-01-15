@@ -28,3 +28,7 @@ def test_hello_html(api):
     r = api.requests.get(f'/hello/{arg}/html')
     assert 'content-type' in r.headers
     assert r.headers['content-type'] == 'text/html'
+
+def test_teapot(api):
+    r = api.requests.get('/416')
+    assert r.status_code == 416
